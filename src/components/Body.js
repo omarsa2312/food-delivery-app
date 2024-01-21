@@ -27,7 +27,7 @@ const Body = () => {
         setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setfilteredListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
-    
+
     const onlineStatus = useOnlineStatus(); 
 
     if(onlineStatus === false){
@@ -57,7 +57,7 @@ const Body = () => {
                 </div>
                 <div className="search m-2 p-4 flex items-center">
                 <button className="bg-green-100 px-4 py-2 rounded-lg" onClick={()=>{
-                    filteredList = listOfRestaurants.filter((res, index)=>{
+                    const filteredList = listOfRestaurants.filter((res, index)=>{
                         return res.info.avgRating > 4.2; 
                     });
                     setfilteredListOfRestaurants(filteredList);
