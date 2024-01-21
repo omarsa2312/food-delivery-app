@@ -9,7 +9,7 @@ const Body = () => {
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [filteredListOfRestaurants, setfilteredListOfRestaurants] = useState([]);
     const [searchText, setSearchText] = useState(""); 
-    
+
     useEffect(()=>{
         fetchData(); 
     }, []);
@@ -33,26 +33,26 @@ const Body = () => {
     if(listOfRestaurants.length === 0){
         return (
         <div className="shimmer">
-            <button className="filter-btn">Top Rated Restaurants</button>
             <Shimmer> </Shimmer>
         </div>
         );
     }
     return (
         <div className="body">
-            <div className="filter">
-                <div className="search">
+            <div className="filter flex">
+                <div className="search m-4 p-4">
                     <input value={searchText} onChange={(e)=>{
                         setSearchText(e.target.value);
-                    }}  type="text" className="search-box"></input>
-                    <button onClick={()=>{
+                    }}  type="text" className="search-box border border-solid border-black"></input>
+                    <button className="px-4 py-2 bg-green-100 m-4 rounded-lg" onClick={()=>{
                         const filteredList = listOfRestaurants.filter((rest)=>{
                             return rest.info.name.toLowerCase().includes(searchText.toLowerCase());
                         });
                         setfilteredListOfRestaurants(filteredList);
                     }}>Search</button>
                 </div>
-                <button className="filter-btn" onClick={()=>{
+                <div className="search m-2 p-4 flex items-center">
+                <button className="bg-green-100 px-4 py-2 rounded-lg" onClick={()=>{
                     filteredList = listOfRestaurants.filter((res, index)=>{
                         return res.info.avgRating > 4; 
                     });
@@ -61,8 +61,10 @@ const Body = () => {
                 >
                     Top Rated Restaurants
                 </button>
+                </div>
+                
             </div>
-            <div className="res-container">
+            <div className="res-container flex flex-wrap">
                 {
                     filteredListOfRestaurants.map((rest) => {
                         return (

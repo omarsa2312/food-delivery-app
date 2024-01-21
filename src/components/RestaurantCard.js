@@ -5,10 +5,10 @@ const RestaurantCard = (props) => {
     const {deliveryTime} = resData?.info?.sla;
 
     return (
-        <div className="res-card">
-            <img className="res-logo" src = {CDN_URL
+        <div className="m-2 p-4 bg-green-100 rounded-lg w-[300px] shadow-lg hover:bg-green-200">
+            <img className="rounded-lg" src = {CDN_URL
             +cloudinaryImageId}></img>
-            <h3>{name}</h3>
+            <h3 className="font-bold py-4 text-lg">{name}</h3>
             <h4>{avgRating} stars</h4>
             <h4>{deliveryTime} minutes</h4>
         </div>
