@@ -1,4 +1,5 @@
 import { CDN_URL } from "../utils/constants";
+
 const RestaurantCard = (props) => {
     const {resData} = props; 
     const {name, avgRating,cloudinaryImageId} = resData?.info; 
@@ -14,5 +15,16 @@ const RestaurantCard = (props) => {
         </div>
     );
 };
+
+export const withPromotedLabel = (RestaurantCard) => {
+    return (props) => {
+        return (
+            <div>
+                <label className="bg-black text-white rounded-lg absolute mx-2 p-2 ">High Rating</label>
+                <RestaurantCard {...props}></RestaurantCard>
+            </div>
+        );
+    };
+}
 
 export default RestaurantCard; 

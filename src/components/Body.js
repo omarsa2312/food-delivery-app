@@ -1,14 +1,18 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, {withPromotedLabel} from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { SWIGGY_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+
 const Body = () => {
     // resList2 = JS variable 
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [filteredListOfRestaurants, setfilteredListOfRestaurants] = useState([]);
     const [searchText, setSearchText] = useState(""); 
+
+    const RestaurantCardPromoted = withPromotedLabel(RestaurantCard); 
+
 
     useEffect(()=>{
         fetchData(); 
@@ -23,7 +27,7 @@ const Body = () => {
         setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
         setfilteredListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     };
-
+    
     const onlineStatus = useOnlineStatus(); 
 
     if(onlineStatus === false){
@@ -54,7 +58,7 @@ const Body = () => {
                 <div className="search m-2 p-4 flex items-center">
                 <button className="bg-green-100 px-4 py-2 rounded-lg" onClick={()=>{
                     filteredList = listOfRestaurants.filter((res, index)=>{
-                        return res.info.avgRating > 4; 
+                        return res.info.avgRating > 4.2; 
                     });
                     setfilteredListOfRestaurants(filteredList);
                 }}
@@ -67,9 +71,12 @@ const Body = () => {
             <div className="res-container flex flex-wrap">
                 {
                     filteredListOfRestaurants.map((rest) => {
+                        
                         return (
                             <Link key = {rest.info.id} to = {`/restaurants/${rest.info.id}`}>
-                                <RestaurantCard resData = {rest}></RestaurantCard>
+                                {
+                                    rest.info.avgRating > 4.2 ? <RestaurantCardPromoted resData={rest}></RestaurantCardPromoted> : <RestaurantCard resData = {rest}></RestaurantCard>
+                                }
                             </Link>
                         );
                     })
