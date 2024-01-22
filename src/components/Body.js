@@ -1,9 +1,10 @@
 import RestaurantCard, {withPromotedLabel} from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { SWIGGY_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
     // resList2 = JS variable 
@@ -13,6 +14,7 @@ const Body = () => {
 
     const RestaurantCardPromoted = withPromotedLabel(RestaurantCard); 
 
+    const {loggedInUser, setUserName} = useContext(UserContext); 
 
     useEffect(()=>{
         fetchData(); 
@@ -65,6 +67,14 @@ const Body = () => {
                 >
                     Top Rated Restaurants
                 </button>
+                </div>
+                <div className="search m-2 p-4 flex items-center">
+                    <label>User Name : </label>
+                    <input className="border border-solid px-2" value={loggedInUser} onChange={
+                        (e) => {
+                            setUserName(e.target.value); 
+                        }
+                    }></input>
                 </div>
                 
             </div>

@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const RestaurantMenu = () => {
     const { resId } = useParams(); 
-    const [showIndex, setShowIndex] = useState(0); 
+    const [showIndex, setShowIndex] = useState(null); 
     const resInfo = useRestaurantMenu(resId); 
 
     if(resInfo === null || resInfo === undefined){
@@ -18,8 +18,6 @@ const RestaurantMenu = () => {
     const categories = resInfo?.data?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter((c) => {
         return (c?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"); 
     }); 
-    
-    console.log(categories); 
 
     return(
         <div className="text-center">
@@ -29,11 +27,12 @@ const RestaurantMenu = () => {
             </p>
             {
                 categories.map((category, index) => {
-                    return <RestaurantCategory data={category.card.card}
+                    return <RestaurantCategory key={index} data={category.card.card}
                         showItems={
                             (index === showIndex) ? true : false
                         }
                         setShowIndex={() => setShowIndex(index)}
+                        setShowIndexNull = {() => {setShowIndex(null)}}
 
                     ></RestaurantCategory>
                 })
